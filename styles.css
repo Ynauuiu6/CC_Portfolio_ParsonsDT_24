@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, Helvetica,sans-serif;
+    margin: 3rem;
+}
+
+header {
+    text-align: left;
+    font-size: 1.75rem;
+    position: relative;
+    /* margin-left: 2rem; */
+    /* margin-right: 2rem; */
+}
+
+header h1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    /* margin-left: 1.25rem; */
+}
+
+header h1 span.right {
+    font-size: 1.5rem;
+    color: #002fa7; /* 克莱因蓝 */
+}
+
+header h1 span#yuanning {
+    cursor: pointer;
+    color: #002fa7;
+    position:relative;
+}
+
+header h1 span#yuanning:hover::after {
+    content: attr(data-hover-content); /* 动态内容 */
+    font-size: 1.25rem;
+    color: #fff;
+    background-color: var(--bg-color, #ffcccb); /* 默认浅红色，可动态修改 */
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.5rem;
+    white-space: nowrap; /* 防止文字换行 */
+    margin-top: 0.5rem; /* 调整背景文字与普通文字之间的间距 */
+    position: absolute; /* 绝对定位 */
+    top: 0.25rem; /* 垂直与 `Yuanning` 顶部对齐 */
+    left: calc(100% + 10px); /* 放置在 `Yuanning` 的右侧，间距 10px */
+    z-index: 10; /* 确保在其他元素之上显示 */
+}
+
+
+
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 1.75rem;
+    margin-top: 2rem;
+    /* margin-left: 1.25rem;
+    margin-right: 1.25rem; */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: #002fa7; /* 克莱因蓝 */
+    margin-bottom: 0.75rem;
+}
+
+li:hover {
+    filter: blur(2px);
+}
+
+.embed-area, .text-area {
+    border: 2px solid #002fa7;
+    padding: 1rem;
+    color: #002fa7; /* 克莱因蓝 */
+    transition: all 0.3s ease-in-out;
+}
+
+.embed-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 80vh; 
+}
+
+
+iframe {
+    height: 70vh;
+    max-height: 500px;
+}
+
+.text-area{
+    overflow-y: auto;
+}
+
+.embed-area iframe {
+    width: 90%; /* 宽度占父容器 100% */
+    height: calc(100% - 1rem); /* 减去可能的内边距或边框 */
+    max-height: 80vh; /* 限制最大高度为视口高度的 80% */
+    border: none; /* 移除默认边框 */
+    box-sizing: border-box; /* 确保内外边距正确计算 */
+}
