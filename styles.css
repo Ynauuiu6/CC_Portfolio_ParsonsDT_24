@@ -63,13 +63,18 @@ ul {
 
 li {
     cursor: pointer;
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: #002fa7; /* 克莱因蓝 */
     margin-bottom: 0.75rem;
 }
 
 li:hover {
     filter: blur(2px);
+}
+
+li a {
+    color: #002fa7; /* 克莱因蓝 */
+    text-decoration: none; 
 }
 
 .embed-area, .text-area {
