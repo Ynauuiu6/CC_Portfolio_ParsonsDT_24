@@ -9,18 +9,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const textContent = item.getAttribute("data-text");
 
             if (sketchName) {
-                clearP5Sketch();
-                embedArea.innerHTML = '';
+                clearP5Sketch(); // 确保清理旧的 p5 实例
+                embedArea.innerHTML = ''; // 清空嵌入区域
+
                 if (sketchName.match(/\.(jpeg|jpg|gif|png)$/)) {
+                    // 加载图片
                     embedArea.innerHTML = `<img src="${sketchName}" alt="Image" style="width:100%; height:auto;">`;
                 } else {
-                    
+                    // 加载新的 p5.js 文件
                     const script = document.createElement('script');
                     script.src = sketchName; 
                     script.type = 'text/javascript';
                     script.onload = () => {
                         console.log(`✅ ${sketchName} loaded successfully!`);
-                        new p5();
+                        window.p5.instance = new p5(); // 创建新 p5 实例
                     };
                     script.onerror = () => console.error(`❌ Failed to load ${sketchName}`);
                     embedArea.appendChild(script);
@@ -78,15 +80,25 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   function clearP5Sketch() {
-    console.log("🔄 Clearing previous p5.js sketch...");
-    const oldCanvas = document.querySelectorAll('canvas');
-    oldCanvas.forEach(canvas => canvas.remove());
+    return new Promise((resolve) => {
+        console.log("🔄 Clearing previous p5.js sketch...");
+        
+        // 移除旧 canvas
+        const oldCanvas = document.querySelectorAll('canvas');
+        oldCanvas.forEach(canvas => canvas.remove());
+        console.log("✅ Old canvas removed.");
+        
+        // 移除旧 p5.js 实例
+        if (window.p5 && window.p5.instance) {
+            window.p5.instance.remove();
+            console.log("✅ Previous p5.js instance removed.");
+        } else {
+            console.warn("⚠️ No active p5.js instance found.");
+        }
 
-    if (window.p5 && window.p5.instance) {
-        window.p5.instance.remove();
-        console.log("Previous p5.js instance removed.");
-    } else {
-        console.warn("No active p5.js instance found.");
-    }
+        // 确保清理完成后 resolve
+        resolve();
+    });
 }
+
 
