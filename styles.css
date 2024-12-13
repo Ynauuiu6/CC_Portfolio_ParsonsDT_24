@@ -73,7 +73,7 @@ li:hover {
 }
 
 .embed-area, .text-area {
-    border: 2px solid #002fa7;
+    /* border: 0.15rem solid #002fa7; */
     padding: 1rem;
     color: #002fa7; /* 克莱因蓝 */
     transition: all 0.3s ease-in-out;
@@ -81,11 +81,11 @@ li:hover {
 
 .embed-area {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: auto;
-    min-height: 80vh; 
+    /* min-height: 80vh; */
+    position: relative;
 }
 
 
@@ -95,7 +95,14 @@ iframe {
 }
 
 .text-area{
-    overflow-y: auto;
+    /* overflow-y: auto; */
+    white-space: normal;
+    word-wrap: break-word;
+    padding: 0.5rem;
+}
+
+.text-area p {
+    margin-bottom: 1rem;
 }
 
 .embed-area iframe {
@@ -104,4 +111,10 @@ iframe {
     max-height: 80vh; /* 限制最大高度为视口高度的 80% */
     border: none; /* 移除默认边框 */
     box-sizing: border-box; /* 确保内外边距正确计算 */
+}
+
+.embed-area canvas {
+    /* flex: 1 1 auto; */
+    width: auto; 
+    height: auto;
 }

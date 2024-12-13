@@ -5,26 +5,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     listItems.forEach(item => {
         item.addEventListener("click", () => {
-            const sketchUrl = item.getAttribute("data-sketch-url");
+            const sketchName = item.getAttribute("data-sketch-name");
             const textContent = item.getAttribute("data-text");
 
-            if (sketchUrl && textContent) {
-                embedArea.innerHTML = `
-                    <iframe 
-                        src="${sketchUrl}" 
-                        width="100%" 
-                        height="100%" 
-                        style="border: none;" 
-                        allowfullscreen>
-                    </iframe>`;
-                textArea.textContent = textContent;
+            if (sketchName) {
+                clearP5Sketch();
+                embedArea.innerHTML = '';
+                if (sketchName.match(/\.(jpeg|jpg|gif|png)$/)) {
+                    embedArea.innerHTML = `<img src="${sketchName}" alt="Image" style="width:100%; height:auto;">`;
+                } else {
+                    
+                    const script = document.createElement('script');
+                    script.src = sketchName; 
+                    script.type = 'text/javascript';
+                    script.onload = () => {
+                        console.log(`✅ ${sketchName} loaded successfully!`);
+                        new p5();
+                    };
+                    script.onerror = () => console.error(`❌ Failed to load ${sketchName}`);
+                    embedArea.appendChild(script);
+                }
             } else {
                 embedArea.innerHTML = "<p>No content available for this item.</p>";
-                textArea.textContent = "";
+            }
+
+            if (textContent) {
+                textArea.textContent = textContent;
             }
         });
     });
 });
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const yuanningElement = document.getElementById("yuanning");
@@ -45,4 +57,36 @@ document.addEventListener("DOMContentLoaded", () => {
         yuanningElement.setAttribute("data-hover-content", randomMessage.text);
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const listItems = document.querySelectorAll('ul li');
+    const textDisplay = document.getElementById('text-area');
+  
+    listItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const textData = this.getAttribute('data-text');
+        const paragraphs = textData.split('|');
+        textDisplay.innerHTML = ''; // 清空之前的内容
+  
+        paragraphs.forEach(paragraph => {
+          const p = document.createElement('p');
+          p.textContent = paragraph.trim(); // 去除段落首尾可能的空白
+          textDisplay.appendChild(p);
+        });
+      });
+    });
+  });
+  
+  function clearP5Sketch() {
+    console.log("🔄 Clearing previous p5.js sketch...");
+    const oldCanvas = document.querySelectorAll('canvas');
+    oldCanvas.forEach(canvas => canvas.remove());
+
+    if (window.p5 && window.p5.instance) {
+        window.p5.instance.remove();
+        console.log("Previous p5.js instance removed.");
+    } else {
+        console.warn("No active p5.js instance found.");
+    }
+}
 
